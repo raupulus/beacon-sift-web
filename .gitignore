@@ -17,6 +17,8 @@ template/
 !.env.example
 !.env.example.production
 /auth.json
+/sources.json
+/storage/app/sources.json
 
 # Logs
 /storage/logs/*.log

@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "defaults": {
+    "enabled": true,
+    "priority": "medium",
+    "interval_minutes": 30,
+    "snippet_max_length": 160
+  },
+  "sources": [
+    {
+      "id": "debian-security",
+      "name": "Debian Security Advisories",
+      "url": "https://www.debian.org/security/dsa",
+      "format": "rss",
+      "type": "cve",
+      "priority": "high",
+      "interval_minutes": 30,
+      "language": "en",
+      "enabled": true,
+      "tags": ["debian", "security", "cve"],
+      "adapter_options": {}
+    },
+    {
+      "id": "kernel-releases",
+      "name": "Linux Kernel Releases",
+      "url": "https://www.kernel.org/feeds/kdist.xml",
+      "format": "rss",
+      "type": "linux",
+      "priority": "medium",
+      "interval_minutes": 60,
+      "language": "en",
+      "enabled": true,
+      "tags": ["linux", "kernel"],
+      "adapter_options": {}
+    },
+    {
+      "id": "nvd-cve-sample",
+      "name": "NVD CVE Feed (Ejemplo API JSON)",
+      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=20",
+      "format": "cve_nvd",
+      "type": "cve",
+      "priority": "critical",
+      "interval_minutes": 60,
+      "language": "en",
+      "enabled": false,
+      "tags": ["cve", "nvd"],
+      "adapter_options": {}
+    }
+  ]
+}

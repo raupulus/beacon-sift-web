@@ -1,12 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Schedule::command('feeds:fetch')
+    ->everyMinute()
+    ->withoutOverlapping();
 
-// Programar la regeneración diaria del sitemap XML a las 03:00
-Schedule::command('sitemap:generate')->dailyAt('03:00');
+Schedule::command('beacon:prune')
+    ->dailyAt('03:30');
