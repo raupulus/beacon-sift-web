@@ -3,86 +3,47 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Section;
 use App\Services\SeoService;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 
 /**
- * Controlador para las páginas estáticas del sitio web: About, Privacy y Cookies.
- * Cada página carga contenido dinámico desde las secciones de su zona correspondiente.
+ * Páginas legales e informativas estáticas simples (/about, /privacy, /cookies).
  */
 class StaticPageController extends Controller
 {
-    /**
-     * Muestra la página "Sobre nosotros".
-     * Las secciones se obtienen desde la base de datos filtradas por zone='about'.
-     *
-     * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View Vista de la página about
-     */
     public function about(SeoService $seo): View
     {
-        // Cargar secciones de la zona 'about' con caché de IDs
-        $sectionIds = Cache::remember('sections_about_ids', 3600, fn () => Section::forZone('about')->pluck('id')->all());
-        $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
-
-        $seo->setTitle(__('messages.about').' - '.setting('site_title', config('app.name')))
-            ->setDescription(__('messages.about_seo_description'))
+        $seo->setTitle('Acerca de — beacon-sift')
+            ->setDescription('Información sobre beacon-sift, agregación responsable y atribución a fuentes originales.')
             ->setUrl(route('about'))
-            ->setBreadcrumbs([
-                ['name' => __('messages.home'), 'url' => route('home')],
-                ['name' => __('messages.about'), 'url' => route('about')],
-            ]);
+            ->setImage(asset('images/redes-sociales/og-image-1200x630.png'));
 
-        return view('about', compact('sections', 'seo'));
+        return view('about', [
+            'contactEmail' => config('beacon.contact_email', 'public@raupulus.dev'),
+        ]);
     }
 
-    /**
-     * Muestra la página de Política de Privacidad.
-     * El contenido se obtiene desde secciones de la zona 'privacy'.
-     *
-     * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View Vista de la página de privacidad
-     */
     public function privacy(SeoService $seo): View
     {
-        $sectionIds = Cache::remember('sections_privacy_ids', 3600, fn () => Section::forZone('privacy')->pluck('id')->all());
-        $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
-
-        $seo->setTitle(__('messages.privacy').' - '.setting('site_title', config('app.name')))
-            ->setDescription(__('messages.privacy_seo_description'))
+        $seo->setTitle('Privacidad — beacon-sift')
+            ->setDescription('Política de privacidad de feed.raupulus.dev: portal público de solo lectura sin registro de usuarios ni rastreadores.')
             ->setUrl(route('privacy'))
-            ->setRobots('noindex,follow')
-            ->setBreadcrumbs([
-                ['name' => __('messages.home'), 'url' => route('home')],
-                ['name' => __('messages.privacy'), 'url' => route('privacy')],
-            ]);
+            ->setImage(asset('images/redes-sociales/og-image-1200x630.png'));
 
-        return view('privacy', compact('sections', 'seo'));
+        return view('privacy', [
+            'contactEmail' => config('beacon.contact_email', 'public@raupulus.dev'),
+        ]);
     }
 
-    /**
-     * Muestra la página de Política de Cookies.
-     * El contenido se obtiene desde secciones de la zona 'cookies'.
-     *
-     * @param  SeoService  $seo  Servicio para gestión de meta tags SEO
-     * @return View Vista de la página de cookies
-     */
     public function cookies(SeoService $seo): View
     {
-        $sectionIds = Cache::remember('sections_cookies_ids', 3600, fn () => Section::forZone('cookies')->pluck('id')->all());
-        $sections = Section::whereIn('id', $sectionIds)->orderBy('order')->get();
-
-        $seo->setTitle(__('messages.cookies').' - '.setting('site_title', config('app.name')))
-            ->setDescription(__('messages.cookies_seo_description'))
+        $seo->setTitle('Cookies — beacon-sift')
+            ->setDescription('Información sobre el uso mínimo de cookies técnicas en feed.raupulus.dev.')
             ->setUrl(route('cookies'))
-            ->setRobots('noindex,follow')
-            ->setBreadcrumbs([
-                ['name' => __('messages.home'), 'url' => route('home')],
-                ['name' => __('messages.cookies'), 'url' => route('cookies')],
-            ]);
+            ->setImage(asset('images/redes-sociales/og-image-1200x630.png'));
 
-        return view('cookies', compact('sections', 'seo'));
+        return view('cookies', [
+            'contactEmail' => config('beacon.contact_email', 'public@raupulus.dev'),
+        ]);
     }
 }

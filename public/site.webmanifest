@@ -1,6 +1,6 @@
 {
-    "name": "Skeleton Laravel Project",
-    "short_name": "Skeleton",
+    "name": "beacon-sift",
+    "short_name": "beacon-sift",
     "icons": [
         {
             "src": "/images/logos/logo-180x180.png",
@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#4f46e5",
-    "background_color": "#ffffff",
+    "theme_color": "#090E17",
+    "background_color": "#090E17",
     "display": "standalone",
     "start_url": "/"
 }

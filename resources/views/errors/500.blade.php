@@ -1,8 +1,19 @@
 @extends('layouts.app')
+
 @section('content')
-<div class="max-w-2xl mx-auto px-4 py-24 text-center">
-    <h1 class="text-6xl font-bold text-red-600">500</h1>
-    <p class="mt-4 text-xl text-gray-600">{{ __('messages.error_500_title') }}</p>
-    <a href="{{ route('home') }}" class="mt-8 inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">{{ __('messages.back_home') }}</a>
+<div class="max-w-xl mx-auto px-4 sm:px-6 py-20">
+    <div class="bg-surface border border-priority-critical/40 rounded-xl p-8 sm:p-10 text-center space-y-5 shadow-sm">
+        <p class="font-mono text-xs uppercase tracking-[0.25em] text-priority-critical">Error interno del servidor</p>
+        <h1 class="font-mono text-6xl font-bold text-priority-critical tracking-tight">500</h1>
+        <p class="text-sm sm:text-base text-text-secondary leading-relaxed">
+            Ha ocurrido un fallo inesperado procesando la solicitud. Inténtalo de nuevo en unos instantes.
+        </p>
+        <div class="pt-2">
+            <a href="{{ route('home') }}"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary-deep hover:bg-primary text-text hover:text-bg text-sm font-semibold transition">
+                ← Volver al feed
+            </a>
+        </div>
+    </div>
 </div>
 @endsection

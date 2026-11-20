@@ -1,18 +1,47 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
 
-/* Tokens semánticos y tipografía del proyecto para Tailwind CSS v4 */
+/* Tokens semánticos de beacon-sift (feed.raupulus.dev) — derivados del logotipo oficial */
 @theme {
     --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
-    --color-primary: #4f46e5;
-    --color-primary-dark: #4338ca;
-    --color-dark: #111827;
-    --color-surface: #ffffff;
-    --color-muted: #6b7280;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* Superficies (Pizarra Abisal / HUD) */
+    --color-bg: #090E17;
+    --color-surface: #0F172A;
+    --color-surface-elevated: #162238;
+    --color-border: #1E293B;
+    --color-border-accent: #1D4ED8;
+
+    /* Acentos del Logotipo (Progresión Radar Cyan -> Cobalto + Baliza Ámbar) */
+    --color-primary: #38BDF8;
+    --color-primary-bright: #00E5FF;
+    --color-primary-deep: #2563EB;
+    --color-beacon: #F59E0B;
+    --color-beacon-bright: #FBBF24;
+
+    /* Tipografía */
+    --color-text: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    /* Estados y Prioridades */
+    --color-live: #10B981;
+    --color-priority-low: #64748B;
+    --color-priority-medium: #38BDF8;
+    --color-priority-high: #F59E0B;
+    --color-priority-critical: #EF4444;
 }
 
 [x-cloak] {
     display: none !important;
+}
+
+.hud-grid-bg {
+    background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -25,4 +54,3 @@
         scroll-behavior: auto !important;
     }
 }
-

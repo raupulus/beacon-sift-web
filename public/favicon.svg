@@ -1,4 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-    <rect width="64" height="64" rx="14" fill="#4f46e5"/>
-    <path d="M20 44V20h10.5c5.5 0 9 3 9 7.8 0 3.3-1.8 5.7-4.7 6.8L41 44h-6.6l-5.4-8.4H26V44h-6zm6-13.4h4c2.3 0 3.7-1.2 3.7-3.1 0-2-1.4-3.1-3.7-3.1h-4v6.2z" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="96" fill="#090E17"/>
+  <!-- Outer cobalt radar HUD ring (segmented) -->
+  <g stroke="#2563EB" stroke-width="26" stroke-linecap="butt">
+    <path d="M 103 166 A 178 178 0 0 1 247 78"/>
+    <path d="M 265 78 A 178 178 0 0 1 368 118"/>
+    <path d="M 398 148 A 178 178 0 0 1 434 247"/>
+    <path d="M 434 265 A 178 178 0 0 1 265 434"/>
+    <path d="M 247 434 A 178 178 0 0 1 144 394"/>
+  </g>
+  <!-- Middle electric sky ring -->
+  <g stroke="#38BDF8" stroke-width="24" stroke-linecap="butt">
+    <path d="M 134 316 A 136 136 0 1 1 334 144"/>
+    <path d="M 366 176 A 136 136 0 0 1 176 366"/>
+  </g>
+  <!-- Inner holographic cyan ring -->
+  <g stroke="#00E5FF" stroke-width="22" stroke-linecap="butt">
+    <path d="M 180 314 A 96 96 0 1 1 312 178"/>
+    <path d="M 336 202 A 96 96 0 0 1 204 336"/>
+  </g>
+  <!-- Diagonal faceted ice-silver prism (top-right) -->
+  <polygon points="274,218 416,96 296,238" fill="#F8FAFC"/>
+  <polygon points="296,238 416,96 286,228" fill="#CBD5E1"/>
+  <!-- Diagonal faceted ice-silver prism (bottom-left) -->
+  <polygon points="238,294 96,416 216,274" fill="#F8FAFC"/>
+  <polygon points="238,294 96,416 226,284" fill="#CBD5E1"/>
+  <!-- Central 4-point faceted telemetry amber-gold beacon star -->
+  <polygon points="256,192 276,256 256,256" fill="#FDE047"/>
+  <polygon points="256,192 236,256 256,256" fill="#FBBF24"/>
+  <polygon points="320,256 256,276 256,256" fill="#F59E0B"/>
+  <polygon points="192,256 256,236 256,256" fill="#FBBF24"/>
+  <polygon points="256,320 276,256 256,256" fill="#D97706"/>
+  <polygon points="256,320 236,256 256,256" fill="#F59E0B"/>
+  <polygon points="320,256 256,236 256,256" fill="#FBBF24"/>
+  <polygon points="192,256 256,276 256,256" fill="#F59E0B"/>
 </svg>
