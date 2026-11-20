@@ -1,22 +1,24 @@
-# Guía y Especificación de Diseño (DESIGN.md)
+# Guía y Especificación de Diseño (`DESIGN.md`) — `beacon-sift`
 
-*Última actualización: 2026-08-26*
+*Última actualización: 2026-11-20*
 
-> Especificación técnica sobre arquitectura visual, maquetación, tipografía y esquema de color basado en Tailwind CSS v4.
+> Especificación técnica de identidad visual, esquema de colores (derivado del logotipo oficial), tipografía, tarjetas de noticias y maquetación para `https://feed.raupulus.dev` con Tailwind CSS v4.
 
 ---
 
 ## 1. Fundamentos y Filosofía Visual
 
-El proyecto implementa un diseño corporativo, minimalista, limpio y moderno. La interfaz pública prioriza la legibilidad, la velocidad de carga y la accesibilidad (WCAG 2.1 AA), evitando artificios visuales innecesarios.
+`feed.raupulus.dev` implementa una estética **radar HUD / telemetría oscura de alto contraste**: limpia, técnica, escaneable en segundos y optimizada para lectura rápida de titulares y alertas en tiempo real.
 
-El diseño sigue una estrategia **mobile-first** estricta, asegurando que todos los componentes y plantillas se visualicen de manera óptima en pantallas pequeñas antes de escalar hacia resoluciones intermedias y de escritorio.
+- **Dark-first por defecto:** El lienzo principal parte del pizarra abisal `#090E17` del logotipo oficial, reduciendo fatiga visual y haciendo destacar las señales de prioridad y los estados en directo.
+- **Mobile-first y accesible:** Contraste mínimo WCAG 2.1 AA sobre superficies oscuras, foco visible (`focus-visible`) en cyan holográfico y cero dependencias pesadas.
+- **Sin ruido visual:** Portal público de solo lectura (sin formularios de login/registro ni barras de administración). La atención recae en la barra de filtros, las tarjetas cronológicas y el pulso en vivo de WebSockets.
 
 ---
 
 ## 2. Stack de Estilos: Tailwind CSS v4
 
-La aplicación utiliza la versión 4 de Tailwind CSS, configurada mediante la directiva `@theme` en `resources/css/app.css`:
+La configuración vive exclusivamente en `resources/css/app.css` mediante `@theme` (sin `tailwind.config.js`):
 
 ```css
 @import "tailwindcss";
@@ -24,69 +26,110 @@ La aplicación utiliza la versión 4 de Tailwind CSS, configurada mediante la di
 
 @theme {
     --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
-    --color-primary: #4f46e5;
-    --color-primary-dark: #4338ca;
-    --color-dark: #111827;
-    --color-surface: #ffffff;
-    --color-muted: #6b7280;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* Superficies (Pizarra Abisal / HUD) */
+    --color-bg: #090E17;
+    --color-surface: #0F172A;
+    --color-surface-elevated: #162238;
+    --color-border: #1E293B;
+    --color-border-accent: #1D4ED8;
+
+    /* Acentos del Logotipo (Progresión Radar Cyan -> Cobalto + Baliza Ámbar) */
+    --color-primary: #38BDF8;
+    --color-primary-bright: #00E5FF;
+    --color-primary-deep: #2563EB;
+    --color-beacon: #F59E0B;
+    --color-beacon-bright: #FBBF24;
+
+    /* Tipografía */
+    --color-text: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    /* Estados y Prioridades */
+    --color-live: #10B981;
+    --color-priority-low: #64748B;
+    --color-priority-medium: #38BDF8;
+    --color-priority-high: #F59E0B;
+    --color-priority-critical: #EF4444;
 }
 ```
-
-
-### Directrices de Tailwind v4:
-- Toda la configuración se declara mediante variables CSS y directivas `@theme` nativas.
-- No se deben crear archivos `tailwind.config.js` antiguos.
-- Se utiliza el plugin oficial `@tailwindcss/forms` para normalizar elementos interactivos de formulario.
 
 ---
 
 ## 3. Esquema de Colores (Tokens Semánticos)
 
-| Rol Semántico | Escala Tailwind | Código Hex Aproximado | Propósito |
-|---------------|-----------------|------------------------|-----------|
-| **Primary** | `indigo-600` / `indigo-700` | `#4f46e5` / `#4338ca` | Botones de acción principal, enlaces activos, badges de categorías |
-| **Secondary** | `gray-800` / `gray-700` | `#1f2937` / `#374151` | Acciones neutras, botones oscuros, cabeceras |
-| **Background** | `gray-50` / `white` | `#f9fafb` / `#ffffff` | Fondo general de página y tarjetas contenedoras |
-| **Text Primary**| `gray-900` | `#111827` | Títulos, textos destacados y párrafos principales |
-| **Text Muted** | `gray-600` / `gray-500`| `#4b5563` / `#6b7280` | Descripciones secundarias, metadatos, fechas |
-| **Success** | `emerald-600` | `#059669` | Alertas de éxito, estados publicados |
-| **Warning** | `amber-500` | `#f59e0b` | Alertas informativas, estados pendientes |
-| **Danger** | `red-600` / `rose-600` | `#dc2626` / `#e11d48` | Errores de validación, acciones destructivas |
+### Paleta Principal (extraída del logotipo oficial)
+
+| Rol Semántico | Token CSS | Código Hex | Propósito en la interfaz |
+| :--- | :--- | :--- | :--- |
+| **Fondo base** | `--color-bg` | `#090E17` | Fondo global de página (`body`), cabeceras y pie |
+| **Superficie tarjeta** | `--color-surface` | `#0F172A` | Tarjetas de noticias, barra de filtros, paneles |
+| **Superficie elevada** | `--color-surface-elevated` | `#162238` | Hover de tarjetas, dropdowns, badges activos |
+| **Borde base** | `--color-border` | `#1E293B` | Separadores sutiles y contornos de tarjetas/inputs |
+| **Primario (Sky)** | `--color-primary` | `#38BDF8` | Enlaces principales, filtros activos, acentos interactivos |
+| **Primario brillante (Cyan)** | `--color-primary-bright` | `#00E5FF` | Focus rings, indicador de fuente seleccionada, highlights HUD |
+| **Primario profundo (Cobalt)** | `--color-primary-deep` | `#2563EB` | Botones primarios, bordes destacados y anillos decorativos |
+| **Baliza (Amber / Gold)** | `--color-beacon` / `--color-beacon-bright` | `#F59E0B` / `#FBBF24` | Alertas destacadas, prioridad `high`, detalles de marca |
+| **Texto principal** | `--color-text` | `#F8FAFC` | Titulares de noticias, H1/H2 y navegación activa |
+| **Texto secundario** | `--color-text-secondary` | `#CBD5E1` | Extractos breves (*snippets*) y párrafos legales |
+| **Texto atenuado** | `--color-text-muted` | `#94A3B8` | Fechas, nombres de fuente, etiquetas secundarias |
+| **Estado en vivo (Live)** | `--color-live` | `#10B981` | Punto pulsante de conexión WebSocket activa y fuentes OK |
+
+### Escala Semántica de Prioridades (`priority`)
+
+| Prioridad | Color principal | Fondo badge (15% opacidad) | Borde badge | Uso |
+| :--- | :--- | :--- | :--- | :--- |
+| **`low`** | `#94A3B8` | `rgba(100, 116, 139, 0.15)` | `#334155` | Noticias generales o informativas |
+| **`medium`** | `#38BDF8` | `rgba(56, 189, 248, 0.14)` | `#0284C7` | Noticias relevantes estándar |
+| **`high`** | `#FBBF24` | `rgba(245, 158, 11, 0.15)` | `#D97706` | Avisos locales importantes, actualizaciones relevantes |
+| **`critical`** | `#F87171` | `rgba(239, 68, 68, 0.16)` | `#DC2626` | CVEs críticos, alertas urgentes de seguridad o emergencia |
 
 ---
 
 ## 4. Tipografía y Escalas de Texto
 
-La fuente oficial del proyecto es **Figtree**, optimizada para interfaces web mediante Bunny Fonts:
+- **Sans principal (`--font-sans`):** `Figtree` para titulares, extractos y navegación.
+- **Monospace técnica (`--font-mono`):** `JetBrains Mono` (fallback sistema `Menlo`/`monospace`) para timestamps, badges de `type`/`priority`, dominio `feed.raupulus.dev` y rutas RSS.
 
-- **H1 (Títulos de Página)**: `text-3xl md:text-5xl font-bold tracking-tight text-gray-900`
-- **H2 (Títulos de Sección)**: `text-2xl md:text-3xl font-bold text-gray-900`
-- **H3 (Títulos de Tarjeta/Módulo)**: `text-lg md:text-xl font-semibold text-gray-800`
-- **Párrafo general**: `text-base text-gray-600 leading-relaxed`
-- **Texto pequeño / Metadatos**: `text-xs text-gray-500`
-
----
-
-## 5. Estructura de Layout y Contenedores
-
-Las vistas públicas se estructuran bajo el layout `resources/views/layouts/app.blade.php`:
-
-1. **Header / Barra de navegación (`layouts/navbar.blade.php`)**:
-   - Altura estándar `h-16`, fijada con borde inferior sutil (`border-b border-gray-100 bg-white`).
-   - Logotipo a la izquierda, enlaces centrales, acciones de autenticación y selector de idioma a la derecha.
-2. **Contenedor Principal (`main`)**:
-   - `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` para vistas generales o `max-w-4xl mx-auto` para lectura de artículos y formularios.
-   - Espaciado vertical estándar mediante `py-8` o `py-12`.
-3. **Pie de Página (`layouts/footer.blade.php`)**:
-   - Fondo `bg-white` o `bg-gray-900`, borde superior sutil, enlaces legales (Privacidad, Cookies) y copyright dinámico.
+| Elemento | Clases Tailwind recomendadas |
+| :--- | :--- |
+| **H1 (Cabecera de página)** | `text-2xl sm:text-3xl font-bold tracking-tight text-text` |
+| **H2 (Secciones / Páginas legales)** | `text-xl sm:text-2xl font-semibold text-text` |
+| **Titular de tarjeta** | `text-base sm:text-lg font-semibold leading-snug text-text group-hover:text-primary transition` |
+| **Extracto (*snippet*, máx. ~160 chars)** | `text-sm text-text-secondary leading-relaxed line-clamp-3` |
+| **Metadatos (fuente, fecha)** | `font-mono text-xs text-text-muted` |
+| **Badges (`type`, `priority`, `live`)** | `font-mono text-[11px] font-medium uppercase tracking-wider` |
 
 ---
 
-## 6. Componentes y Reglas de Maquetación
+## 5. Estructura de Layout y Tarjetas (`feed.raupulus.dev`)
 
-- **Bordes redondeados**: Estándar `rounded-lg` (8px) para tarjetas y botones; `rounded-xl` (12px) para contenedores destacados; `rounded-full` para badges y avatares.
-- **Sombras**: Preferir `shadow-sm` para estado neutro y elevar a `hover:shadow-md` en interacción.
-- **Transiciones**: Siempre incluir `transition duration-150 ease-in-out` en hover, focus y active.
-- **Formularios**: Todo input debe contar con `rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500`.
+1. **Header (`h-16`, `sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border`):**
+   - Izquierda: logotipo SVG (`/images/logos/logo.svg`) + marca `beacon-sift`.
+   - Centro/Derecha: enlaces `Noticias` (`/`), `Fuentes` (`/sources`), botón `RSS` (`/feed.rss` heredando filtros) e indicador en vivo WebSocket (`● Live` en `#10B981`).
+2. **Barra de filtros en `/`:**
+   - Buscador por palabra clave (`q`) + selectores/píldoras de `type`, `priority` y `source` reflejados siempre en query string.
+   - Botón rápido para limpiar filtros y enlace directo al `/feed.rss` con los filtros actuales.
+3. **Grid de tarjetas de noticias (`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6`):**
+   - Grid responsive (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`).
+   - Cada tarjeta (`bg-surface border border-border hover:border-primary/50 rounded-xl overflow-hidden transition`):
+     - **Cabecera visual (16:9):** imagen por **hotlink directo** (`loading="lazy"`, `referrerpolicy="no-referrer"`) si viene en el feed; en caso contrario o si falla `onerror`, **fallback HUD limpio** (fondo `#0B1324` con rejilla sutil, color de acento según prioridad e inicial/icono del `type`).
+     - **Cuerpo:** fila superior con badge de `type` + badge de `priority` + fecha relativa/absoluta; titular enlazado al medio original (`target="_blank" rel="noopener noreferrer"`); extracto breve (~160 chars); pie con atribución a la fuente y enlace externo discreto.
+4. **Pie de página (`border-t border-border bg-bg`):**
+   - Enlaces legales simples (`/about`, `/privacy`, `/cookies`), aviso de agregación responsable y contacto `public@raupulus.dev`.
 
-> ⚠️ **Prohibición de estilos manuales**: Consulte el catálogo de componentes en [COMPONENTS.md](COMPONENTS.md). Está expresamente prohibido maquetar botones, modales o inputs manuales con clases Tailwind si ya existe el componente Blade correspondiente (`<x-primary-button>`, `<x-secondary-button>`, `<x-text-input>`, etc.).
+---
+
+## 6. Assets de Marca Oficiales
+
+| Uso | Ruta en `web/public/` | Formato / Medidas |
+| :--- | :--- | :--- |
+| **Favicon SVG** | `/favicon.svg` | Vectorial (`512×512` viewBox) |
+| **Favicon ICO** | `/favicon.ico` | Multi-resolución (`16`, `32`, `48`) |
+| **Apple Touch Icon** | `/apple-touch-icon.png` y `/images/logos/logo-180x180.png` | `180×180px` PNG |
+| **Logotipo cabecera** | `/images/logos/logo.svg` | Vectorial SVG |
+| **Banner horizontal** | `/images/logos/logo-1200x300.webp` | `1200×300px` WebP |
+| **Preview redes (Open Graph / Twitter)** | `/images/redes-sociales/og-image-1200x630.png` y `.webp` | `1200×630px` |
+| **Perfiles sociales cuadrados** | `/images/redes-sociales/{facebook,instagram,twitter}/` | `128`, `250`, `500`, `1200px` WebP |
