@@ -104,3 +104,9 @@ Creado por **Raúl Caro Pastorino (`@raupulus`)** — [https://raupulus.dev](htt
 - **GitHub:** [https://github.com/raupulus](https://github.com/raupulus)
 - **GitLab:** [https://gitlab.com/raupulus](https://gitlab.com/raupulus)
 - **Correo público:** `public@raupulus.dev`
+
+---
+
+## Licencia
+
+Este proyecto se distribuye bajo la licencia **GNU Affero General Public License v3.0 (`AGPL-3.0-or-later`)**. Consulta el texto completo en [`LICENSE`](./LICENSE).

@@ -55,6 +55,7 @@ Este directorio es un **repositorio Git independiente y autocontenido** (`raupul
 web/
 ├── AGENTS.md                        # Reglas, arquitectura y protocolo residente de documentación
 ├── CLAUDE.md -> AGENTS.md           # Symlink obligatorio al protocolo principal
+├── LICENSE                          # Licencia GNU AGPLv3 (AGPL-3.0-or-later)
 ├── README.md                        # Documentación general del servicio web
 ├── .env.example                     # Variables de desarrollo (sin secretos)
 ├── .env.example.production          # Plantilla de producción (sin secretos)
@@ -199,6 +200,7 @@ Protocolo obligatorio aplicable a **todas** las tareas presentes y futuras en es
 ## 9. Privacidad, autoría y seguridad
 
 - **Autor:** Raúl Caro Pastorino (`@raupulus`) — [https://raupulus.dev](https://raupulus.dev)
+- **Licencia:** GNU Affero General Public License v3.0 (`AGPL-3.0-or-later`, ver [`LICENSE`](./LICENSE))
 - **Correo personal estrictamente prohibido:** NUNCA utilizar bajo ningún concepto ningún correo personal o privado del creador.
 - **Único correo público permitido:** `public@raupulus.dev`
 - **Sin secretos ni archivos locales en Git:** Nunca versionar `.env`, `storage/app/sources.json`, `sources.json`, claves privadas ni rutas locales de usuario.

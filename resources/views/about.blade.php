@@ -19,6 +19,12 @@
             Si eres titular de una fuente listada en <a href="{{ route('sources.index') }}" class="text-primary hover:underline">/sources</a> y deseas actualizar su atribución o solicitar su retirada inmediata, escribe a
             <a href="mailto:{{ $contactEmail }}" class="font-mono text-primary hover:underline">{{ $contactEmail }}</a>.
         </p>
+
+        <h2 class="text-lg font-semibold text-text pt-2">Código fuente y licencia</h2>
+        <p class="text-sm sm:text-base text-text-secondary leading-relaxed">
+            <strong class="text-text">beacon-sift-web</strong> es software libre publicado bajo licencia <strong class="text-text">GNU AGPLv3</strong> (<span class="font-mono">AGPL-3.0-or-later</span>). Puedes consultar y descargar el código fuente completo en
+            <a href="https://github.com/raupulus/beacon-sift-web" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">github.com/raupulus/beacon-sift-web</a>.
+        </p>
     </article>
 </div>
 @endsection

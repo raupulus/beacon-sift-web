@@ -5,7 +5,7 @@
     "description": "Servicio web de beacon-sift (feed.raupulus.dev): ingesta multi-formato, PostgreSQL, WebSockets públicos, RSS y API de solo lectura.",
     "keywords": ["laravel", "beacon-sift", "rss", "atom", "cve", "postgresql", "reverb"],
     "homepage": "https://raupulus.dev",
-    "license": "MIT",
+    "license": "AGPL-3.0-or-later",
     "authors": [
         {
             "name": "Raúl Caro Pastorino",
