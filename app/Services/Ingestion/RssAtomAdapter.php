@@ -49,10 +49,8 @@ class RssAtomAdapter implements FeedAdapterInterface
         $nodes = isset($xml->channel->item) ? $xml->channel->item : ($xml->item ?? []);
 
         foreach ($nodes as $node) {
-            $title = trim(html_entity_decode(strip_tags((string) ($node->title ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
             $url = TextSanitizer::resolveUrl((string) ($node->link ?? ''), $source->url);
-
-            if ($title === '' || $url === null) {
+            if ($url === null) {
                 continue;
             }
 
@@ -63,6 +61,15 @@ class RssAtomAdapter implements FeedAdapterInterface
                 $rawDescription = (string) ($content->encoded ?? '');
             }
             $snippet = TextSanitizer::snippet($rawDescription, $source->snippet_max_length);
+
+            $title = trim(html_entity_decode(strip_tags((string) ($node->title ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            if ($title === '' && $snippet !== null) {
+                $title = TextSanitizer::snippet($snippet, 100) ?? '';
+            }
+
+            if ($title === '') {
+                continue;
+            }
 
             $dc = $node->children('http://purl.org/dc/elements/1.1/');
             $author = trim((string) ($node->author ?? $dc->creator ?? '')) ?: null;

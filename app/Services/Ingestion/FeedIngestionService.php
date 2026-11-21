@@ -91,6 +91,11 @@ class FeedIngestionService
             $adapter = $this->resolveAdapter($source->format);
             $parsedItems = $adapter->parse($response->body(), $source);
 
+            $maxItems = (int) ($source->adapter_options['max_items'] ?? 0);
+            if ($maxItems > 0 && count($parsedItems) > $maxItems) {
+                $parsedItems = array_slice($parsedItems, 0, $maxItems);
+            }
+
             $createdItems = [];
             foreach ($parsedItems as $parsed) {
                 $fingerprint = NewsItem::makeFingerprint($source->id, $parsed->externalId, $parsed->url);

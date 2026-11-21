@@ -37,8 +37,9 @@ En el repositorio se versiona `sources.example.json`. El archivo real (`storage/
 }
 ```
 
-### Opciones de `JsonAdapter` (`adapter_options`)
-- `items_path`: ruta dot-notation al array de entradas (por defecto `"items"`, `""` si la raíz ya es una lista).
+### Opciones comunes y de `JsonAdapter` (`adapter_options`)
+- `max_items` *(todos los adaptadores)*: entero positivo opcional para limitar cuántas entradas más recientes se procesan en cada ingesta (evita importar cientos de históricos en feeds extensos como OpenAI o Mistral).
+- `items_path` *(solo `JsonAdapter`)*: ruta dot-notation al array de entradas (por defecto `"items"`, `""` si la raíz ya es una lista).
 - `external_id_field`, `title_field`, `url_field`, `summary_field`, `image_field`, `author_field`, `published_at_field`, `tags_field`.
 
 ---
@@ -54,11 +55,11 @@ En el repositorio se versiona `sources.example.json`. El archivo real (`storage/
 ## 3. Adaptadores y sanitización (`app/Services/Ingestion/`)
 
 - `FeedAdapterInterface`: Contrato único `parse(string $body, Source $source): array`.
-- `RssAtomAdapter`: Soporta RSS 2.0, RSS 1.0 (RDF) y Atom 1.0; usa `<content:encoded>` como fallback cuando `<description>` viene vacío; extrae imágenes de `media:content`, `media:thumbnail`, `<enclosure>` y enlaces Atom; resuelve URLs relativas contra `$source->url`.
+- `RssAtomAdapter`: Soporta RSS 2.0, RSS 1.0 (RDF) y Atom 1.0; usa `<content:encoded>` como fallback cuando `<description>` viene vacío y deriva título breve del extracto si un feed de microblogging (ej. Mastodon `.rss`) omite `<title>`; extrae imágenes de `media:content`, `media:thumbnail`, `<enclosure>` y enlaces Atom; resuelve URLs relativas contra `$source->url`.
 - `JsonAdapter`: Mapea feeds JSON arbitrarios resolviendo URLs relativas.
 - `CveNvdAdapter`: Parsea la API 2.0 de NVD y ajusta la prioridad según puntuación CVSS (`>=9.0` critical, `>=7.0` high, `>=4.0` medium, `<4.0` low).
 - `TextSanitizer`: Limpia HTML/entidades, trunca snippets a `snippet_max_length`, bloquea esquemas inseguros (`javascript:`, `data:`) y resuelve URLs relativas con `resolveUrl()`.
-- `FeedIngestionService`: Envía `If-None-Match` e `If-Modified-Since`, gestiona respuestas `304 Not Modified`, guarda auditoría, deduplica y dispara `NewsItemCreated`.
+- `FeedIngestionService`: Envía `If-None-Match` e `If-Modified-Since`, respeta `adapter_options.max_items`, gestiona respuestas `304 Not Modified`, guarda auditoría, deduplica y dispara `NewsItemCreated`.
 
 ---
 
@@ -69,4 +70,4 @@ En el repositorio se versiona `sources.example.json`. El archivo real (`storage/
 
 ---
 
-> Creado: 2026-11-20 · Última revisión: 2026-11-21
+> Creado: 2026-11-20 · Última revisión: 2026-11-22

@@ -83,6 +83,52 @@ XML;
         $this->assertDatabaseCount('source_fetch_logs', 2);
     }
 
+    public function test_respects_max_items_option_and_handles_titleless_mastodon_rss(): void
+    {
+        Event::fake([NewsItemCreated::class]);
+
+        $source = Source::factory()->create([
+            'slug' => 'fosstodon-sourceware',
+            'url' => 'https://fosstodon.org/@sourceware.rss',
+            'format' => SourceFormat::Rss,
+            'type' => 'opensource',
+            'adapter_options' => ['max_items' => 1],
+        ]);
+
+        $rssXml = <<<'XML'
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Sourceware</title>
+    <item>
+      <guid>post-1</guid>
+      <link>https://fosstodon.org/@sourceware/1</link>
+      <description><![CDATA[<p>Nueva versión de binutils y GCC disponible en Sourceware.</p>]]></description>
+      <pubDate>Sat, 21 Nov 2026 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <guid>post-2</guid>
+      <link>https://fosstodon.org/@sourceware/2</link>
+      <description><![CDATA[<p>Segunda entrada que debe recortarse por max_items=1.</p>]]></description>
+      <pubDate>Sat, 21 Nov 2026 11:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
+XML;
+
+        Http::fake([
+            'https://fosstodon.org/@sourceware.rss' => Http::response($rssXml, 200),
+        ]);
+
+        $result = app(FeedIngestionService::class)->ingest($source);
+
+        $this->assertSame(FetchStatus::Success, $result['status']);
+        $this->assertSame(1, $result['found']);
+        $this->assertSame(1, $result['created']);
+        $this->assertDatabaseCount('news_items', 1);
+        $this->assertStringContainsString('binutils', NewsItem::query()->firstOrFail()->title);
+    }
+
     public function test_handles_http_304_not_modified_respecting_etag(): void
     {
         $source = Source::factory()->create([
