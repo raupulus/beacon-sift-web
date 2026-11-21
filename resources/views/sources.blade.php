@@ -9,9 +9,12 @@
                 Transparencia de orígenes configurados en <span class="font-mono text-text-secondary">feed.raupulus.dev</span>. Haz clic en cualquier fuente para filtrar sus entradas.
             </p>
         </div>
-        <span class="font-mono text-xs text-primary bg-surface border border-border px-3 py-1.5 rounded-lg">
-            {{ $sources->count() }} fuente(s) activa(s)
-        </span>
+        <div class="flex flex-wrap items-center gap-3">
+            <x-rss-actions :url="$rssUrl" :label="$selectedType !== '' ? 'RSS de esta vista' : 'RSS de fuentes'" />
+            <span class="font-mono text-xs text-primary bg-surface border border-border px-3 py-1.5 rounded-lg">
+                {{ $sources->count() }} fuente(s) activa(s)
+            </span>
+        </div>
     </div>
 
     @if ($availableTypes->isNotEmpty())
@@ -74,13 +77,21 @@
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-3 border-t border-border/70 flex items-center justify-between text-xs font-mono">
+                    <div class="mt-auto pt-3 border-t border-border/70 flex items-center justify-between gap-3 text-xs font-mono">
                         <a href="{{ route('home', ['source' => $source->slug]) }}" class="text-primary hover:text-primary-bright transition">
                             Ver noticias →
                         </a>
-                        <a href="{{ $source->url }}" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text transition">
-                            Origen ↗
-                        </a>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('feed.rss', ['source' => $source->slug]) }}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-beacon-bright hover:underline transition">
+                                RSS<span class="sr-only"> de {{ $source->name }}</span>
+                            </a>
+                            <a href="{{ $source->url }}" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text transition">
+                                Origen ↗
+                            </a>
+                        </div>
                     </div>
                 </article>
             @endforeach

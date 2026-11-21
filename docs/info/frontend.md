@@ -8,9 +8,9 @@
 
 ## Rutas y controladores (`app/Http/Controllers/Web/`)
 
-- `GET /` (`FeedController` → `resources/views/home.blade.php`): Listado cronológico paginado (`18` por página) con filtros en URL (`q`, `type`, `priority`, `source`), píldoras rápidas de tipo, contador de resultados, enlace al `/feed.rss` filtrable y bloque superior en vivo con Alpine.js para eventos `beacon:news-created`.
-- `GET /sources` (`SourcesPageController` → `resources/views/sources.blade.php`): Catálogo público de fuentes activas filtrable por `?type=` con indicador visual de salud por fuente.
-- `GET /feed.rss` (`RssFeedController` → `resources/views/rss.blade.php`): Salida XML RSS 2.0 filtrable.
+- `GET /` (`FeedController` → `resources/views/home.blade.php`): Listado cronológico paginado (`18` por página) con filtros en URL (`q`, `type`, `priority`, `source`), píldoras rápidas de tipo, contador de resultados, componente `<x-rss-actions>` (enlace `/feed.rss` con filtros + botón copiar URL) y bloque superior en vivo con Alpine.js para eventos `beacon:news-created`.
+- `GET /sources` (`SourcesPageController` → `resources/views/sources.blade.php`): Catálogo público de fuentes activas filtrable por `?type=` con indicador visual de salud por fuente, enlace `/feed.rss` heredando el filtro activo y acceso RSS directo por fuente.
+- `GET /feed.rss` (`RssFeedController` → `resources/views/rss.blade.php`): Salida XML RSS 2.0 filtrable servida inline (`application/xml`).
 - `GET /about`, `/privacy`, `/cookies` (`StaticPageController`): Páginas legales e informativas simples con contacto `public@raupulus.dev`.
 
 ---
@@ -22,4 +22,4 @@
 
 ---
 
-> Creado: 2026-11-20 · Última revisión: 2026-11-21
+> Creado: 2026-11-20 · Última revisión: 2026-11-22

@@ -38,6 +38,8 @@ class WebPagesTest extends TestCase
             ->assertSee('Debian 13 point release available')
             ->assertSee('https://cdn.example.org/debian.jpg')
             ->assertSee('Mostrando 1 de 1 entradas')
+            ->assertSee(route('feed.rss', ['type' => 'debian', 'priority' => 'high', 'q' => 'Debian']))
+            ->assertSee('Copiar enlace RSS')
             ->assertDontSee('Unrelated hardware benchmark');
     }
 
@@ -58,19 +60,21 @@ class WebPagesTest extends TestCase
 
     public function test_sources_page_lists_and_filters_active_sources(): void
     {
-        Source::factory()->create(['name' => 'Visible CVE Source', 'type' => 'cve', 'is_active' => true]);
-        Source::factory()->create(['name' => 'Visible Linux Source', 'type' => 'linux', 'is_active' => true]);
+        Source::factory()->create(['slug' => 'cve-src', 'name' => 'Visible CVE Source', 'type' => 'cve', 'is_active' => true]);
+        Source::factory()->create(['slug' => 'linux-src', 'name' => 'Visible Linux Source', 'type' => 'linux', 'is_active' => true]);
         Source::factory()->create(['name' => 'Inactive Source', 'type' => 'cve', 'is_active' => false]);
 
         $this->get('/sources')
             ->assertOk()
             ->assertSee('Visible CVE Source')
             ->assertSee('Visible Linux Source')
+            ->assertSee(route('feed.rss', ['source' => 'cve-src']))
             ->assertDontSee('Inactive Source');
 
         $this->get('/sources?type=cve')
             ->assertOk()
             ->assertSee('Visible CVE Source')
+            ->assertSee(route('feed.rss', ['type' => 'cve']))
             ->assertDontSee('Visible Linux Source');
     }
 
@@ -90,7 +94,9 @@ class WebPagesTest extends TestCase
         $response = $this->get('/feed.rss?type=cve&min_priority=high');
 
         $response->assertOk();
-        $this->assertStringContainsString('application/rss+xml', (string) $response->headers->get('Content-Type'));
+        $this->assertStringContainsString('application/xml', (string) $response->headers->get('Content-Type'));
+        $this->assertStringContainsString('inline', (string) $response->headers->get('Content-Disposition'));
+        $this->assertStringContainsString('feed.rss', (string) $response->headers->get('Content-Disposition'));
         $response->assertSee('CVE-2026-0001 Critical Advisory', false);
 
         $xml = simplexml_load_string((string) $response->getContent());

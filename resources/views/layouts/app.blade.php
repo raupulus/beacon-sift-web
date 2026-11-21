@@ -20,7 +20,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <link rel="alternate" type="application/rss+xml" title="beacon-sift RSS" href="{{ route('feed.rss') }}">
+    <link rel="alternate" type="application/rss+xml" title="beacon-sift RSS" href="{{ $rssUrl ?? route('feed.rss') }}">
 
     {{-- Open Graph / Twitter Card --}}
     <meta property="og:type" content="website">
@@ -66,8 +66,9 @@
                     Fuentes
                 </a>
                 <a href="{{ $rssUrl ?? route('feed.rss') }}"
-                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-beacon/40 bg-beacon/10 text-beacon-bright hover:bg-beacon/20 transition"
-                   title="Suscribirse al feed RSS">
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center gap-1.5 min-h-[30px] px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-beacon/40 bg-beacon/10 text-beacon-bright hover:bg-beacon/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-beacon">
                     <span>RSS</span>
                 </a>
 

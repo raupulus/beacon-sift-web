@@ -34,8 +34,8 @@ Sin autenticación (portal público de solo lectura), acotados con `throttle:60,
 Controlador: `App\Http\Controllers\Web\RssFeedController` (`resources/views/rss.blade.php`).
 
 - Soporta los mismos filtros (`type`, `min_priority`, `priority`, `source`, `q`, `limit` máx. `100`).
-- Devuelve `Content-Type: application/rss+xml; charset=UTF-8` con cache HTTP `max-age=120` y escape seguro de `]]>` dentro de nodos `<![CDATA[...]]>`.
+- Devuelve `Content-Type: application/xml; charset=UTF-8` y `Content-Disposition: inline; filename="feed.rss"` con cache HTTP `max-age=120` y escape seguro de `]]>` dentro de nodos `<![CDATA[...]]>`, permitiendo abrir el XML en pestaña del navegador sin forzar descarga ni perder compatibilidad con lectores RSS.
 
 ---
 
-> Creado: 2026-11-20 · Última revisión: 2026-11-21
+> Creado: 2026-11-20 · Última revisión: 2026-11-22

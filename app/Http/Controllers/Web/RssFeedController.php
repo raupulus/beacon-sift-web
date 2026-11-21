@@ -35,7 +35,8 @@ class RssFeedController extends Controller
         ])->render();
 
         return response($xml, 200, [
-            'Content-Type' => 'application/rss+xml; charset=UTF-8',
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'Content-Disposition' => 'inline; filename="feed.rss"',
             'Cache-Control' => 'public, max-age=120',
         ]);
     }

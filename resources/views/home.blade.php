@@ -59,14 +59,11 @@
                     Últimas noticias y alertas ordenadas cronológicamente con enlace directo a la fuente original.
                 </p>
             </div>
-            <div class="flex items-center gap-2 shrink-0">
-                <a href="{{ $rssUrl }}"
-                   class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono font-medium border border-beacon/40 bg-beacon/10 text-beacon-bright hover:bg-beacon/20 transition">
-                    <span>RSS de esta vista</span>
-                </a>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+                <x-rss-actions :url="$rssUrl" label="RSS de esta vista" />
                 @if ($hasActiveFilters)
                     <a href="{{ route('home') }}"
-                       class="inline-flex items-center px-3 py-2 rounded-lg text-xs font-mono border border-border bg-bg text-text-secondary hover:text-text hover:border-primary/40 transition">
+                       class="inline-flex items-center min-h-[30px] px-3 py-1.5 rounded-lg text-xs font-mono border border-border bg-bg text-text-secondary hover:text-text hover:border-primary/40 transition">
                         Limpiar filtros
                     </a>
                 @endif

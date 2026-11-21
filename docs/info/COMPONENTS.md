@@ -8,10 +8,10 @@
 
 ## 1. Layout principal (`resources/views/layouts/app.blade.php`)
 
-- **Metadatos y SEO:** Inyecta título, descripción, `canonical`, `theme-color: #090E17`, favicons (`/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png`), `site.webmanifest`, `<link rel="alternate" type="application/rss+xml">`, Open Graph y Twitter Card (`/images/redes-sociales/og-image-1200x630.png`).
+- **Metadatos y SEO:** Inyecta título, descripción, `canonical`, `theme-color: #090E17`, favicons (`/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png`), `site.webmanifest`, `<link rel="alternate" type="application/rss+xml">` (heredando `$rssUrl` cuando hay filtros activos), Open Graph y Twitter Card (`/images/redes-sociales/og-image-1200x630.png`).
 - **Header sticky (`h-16`):**
   - Logotipo `/images/logos/logo.svg` + marca `beacon-sift` (`feed.raupulus.dev`).
-  - Navegación: `Noticias` (`/`), `Fuentes` (`/sources`) y acceso directo `RSS` (`/feed.rss` heredando filtros activos).
+  - Navegación: `Noticias` (`/`), `Fuentes` (`/sources`) y acceso directo `RSS` en nueva pestaña (`/feed.rss` heredando filtros activos).
   - Indicador de estado WebSocket reactivo vía evento `beacon:ws-status` (`LIVE` en `#10B981`, `CONECTANDO` en `#F59E0B`, `OFFLINE` en `#94A3B8`).
 - **Footer:** Aviso de agregación responsable, enlaces a `/about`, `/privacy`, `/cookies` y contacto `public@raupulus.dev`.
 
@@ -35,11 +35,19 @@ Archivo: `resources/views/components/news-card.blade.php`
 
 ---
 
-## 3. Vistas de error HUD
+## 3. Barra de acciones RSS (`<x-rss-actions />`)
+
+Archivo: `resources/views/components/rss-actions.blade.php`
+
+- Renderiza el enlace directo al feed XML filtrado en nueva pestaña (`target="_blank" rel="noopener noreferrer"`) junto al botón `Copiar enlace RSS` con portapapeles (`navigator.clipboard.writeText`) y región `role="status" aria-live="polite"` externa para anunciar el resultado (`URL RSS copiada` / `No se pudo copiar`).
+
+---
+
+## 4. Vistas de error HUD
 
 - `resources/views/errors/404.blade.php`: Página `404` estilizada en `#090E17` / `#0F172A` con botón de retorno a `route('home')`.
 - `resources/views/errors/500.blade.php`: Página `500` estilizada sin exponer trazas técnicas al público.
 
 ---
 
-> Creado: 2026-11-20 · Última revisión: 2026-11-21
+> Creado: 2026-11-20 · Última revisión: 2026-11-22

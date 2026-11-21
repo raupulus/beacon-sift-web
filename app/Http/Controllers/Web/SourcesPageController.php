@@ -41,6 +41,7 @@ class SourcesPageController extends Controller
             'sources' => $sources,
             'availableTypes' => $availableTypes,
             'selectedType' => $selectedType,
+            'rssUrl' => route('feed.rss', $selectedType !== '' ? ['type' => $selectedType] : []),
         ]);
     }
 }
