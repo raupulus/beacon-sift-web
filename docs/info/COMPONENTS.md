@@ -39,3 +39,7 @@ Archivo: `resources/views/components/news-card.blade.php`
 
 - `resources/views/errors/404.blade.php`: Página `404` estilizada en `#090E17` / `#0F172A` con botón de retorno a `route('home')`.
 - `resources/views/errors/500.blade.php`: Página `500` estilizada sin exponer trazas técnicas al público.
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

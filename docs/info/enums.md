@@ -16,3 +16,7 @@
 
 ## 3. `App\Enums\FetchStatus`
 - Casos: `Success` (`success`), `NotModified` (`not_modified`), `Error` (`error`).
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

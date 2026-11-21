@@ -19,3 +19,7 @@
 
 - `resources/css/app.css`: Directivas Tailwind CSS v4 (`@theme`), tokens del logotipo (`#090E17`, `#0F172A`, `#38BDF8`, `#00E5FF`, `#2563EB`, `#F59E0B`, `#10B981`) y clase `.hud-grid-bg` para el fallback visual de tarjetas.
 - `resources/js/app.js`: Inicialización de Alpine.js y suscripción a Laravel Reverb mediante Laravel Echo (`pusher-js`).
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

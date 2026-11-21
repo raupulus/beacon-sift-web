@@ -86,6 +86,17 @@ composer run dev
 
 ---
 
+## Documentación técnica y ecosistema `beacon-sift`
+
+- **Guía de desarrollo y arquitectura:** [`AGENTS.md`](./AGENTS.md)
+- **Índice técnico vivo (`docs/info/`):** [`docs/info/README.md`](./docs/info/README.md)
+
+Repositorios independientes del ecosistema que consumen esta API pública y el canal Reverb:
+- **Bot de Telegram:** [GitHub (`raupulus/beacon-sift-bot-telegram`)](https://github.com/raupulus/beacon-sift-bot-telegram) · [GitLab](https://gitlab.com/raupulus/beacon-sift-bot-telegram)
+- **Bot de Discord:** [GitHub (`raupulus/beacon-sift-bot-discord`)](https://github.com/raupulus/beacon-sift-bot-discord) · [GitLab](https://gitlab.com/raupulus/beacon-sift-bot-discord)
+
+---
+
 ## Autoría y contacto
 
 Creado por **Raúl Caro Pastorino (`@raupulus`)** — [https://raupulus.dev](https://raupulus.dev)

@@ -30,3 +30,17 @@
 - `app/Console/Commands/PruneBeaconDataCommand.php`
 - `routes/console.php`
 - `tests/Feature/SourceSyncTest.php`, `tests/Feature/FeedIngestionTest.php`
+
+---
+
+## 4. Comandos Composer y desarrollo (`composer.json`)
+
+| Comando | Uso |
+|---|---|
+| `composer run check` | Ejecuta Laravel Pint (`--test --format agent`) y `php artisan test --compact`. |
+| `composer run pint` | Formatea el código PHP según PSR-12 / preset de Pint. |
+| `composer run dev` | Levanta en paralelo `php artisan serve`, `php artisan reverb:start`, `php artisan pail` y `pnpm run dev`. |
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

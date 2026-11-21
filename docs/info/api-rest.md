@@ -35,3 +35,7 @@ Controlador: `App\Http\Controllers\Web\RssFeedController` (`resources/views/rss.
 
 - Soporta los mismos filtros (`type`, `min_priority`, `priority`, `source`, `q`, `limit` máx. `100`).
 - Devuelve `Content-Type: application/rss+xml; charset=UTF-8` con cache HTTP `max-age=120` y escape seguro de `]]>` dentro de nodos `<![CDATA[...]]>`.
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

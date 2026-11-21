@@ -80,5 +80,5 @@ public/docs/api/
 *.bak
 .junie/
 /skills/
-docs/planning/
-docs/auditorias/
+/docs/planning/
+/docs/auditorias/

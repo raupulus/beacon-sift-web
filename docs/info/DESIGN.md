@@ -133,3 +133,7 @@ La configuración vive exclusivamente en `resources/css/app.css` mediante `@them
 | **Banner horizontal** | `/images/logos/logo-1200x300.webp` | `1200×300px` WebP |
 | **Preview redes (Open Graph / Twitter)** | `/images/redes-sociales/og-image-1200x630.png` y `.webp` | `1200×630px` |
 | **Perfiles sociales cuadrados** | `/images/redes-sociales/{facebook,instagram,twitter}/` | `128`, `250`, `500`, `1200px` WebP |
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

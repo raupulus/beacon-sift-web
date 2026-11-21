@@ -66,3 +66,7 @@ En el repositorio se versiona `sources.example.json`. El archivo real (`storage/
 
 - `source_fetch_logs`: purga automática a los **30 días** (`BEACON_FETCH_LOGS_RETENTION_DAYS=30`).
 - `news_items`: **sin borrado por defecto (`BEACON_ITEMS_RETENTION_DAYS=0`)**, configurable por entorno.
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

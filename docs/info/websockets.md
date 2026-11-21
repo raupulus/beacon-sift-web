@@ -47,3 +47,7 @@
 
 - **Navegador (`resources/js/app.js`):** Laravel Echo + `pusher-js` se conecta al servidor Reverb usando `VITE_REVERB_*`, emite eventos DOM `beacon:ws-status` (`connecting`, `connected`, `offline`) y `beacon:news-created` para inyectar tarjetas en directo respetando los filtros activos en `/`.
 - **Bots Python:** Conectan al endpoint WebSocket protocolo Pusher v7 (`ws(s)://{REVERB_HOST}:{REVERB_PORT}/app/{REVERB_APP_KEY}?protocol=7&client=python&version=1.0`), envían `{"event":"pusher:subscribe","data":{"channel":"beacon.news"}}` y procesan cada evento `news.created`.
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21

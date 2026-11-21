@@ -18,3 +18,7 @@
 - `setImage(string $image): static` / `getImage(): string`
 
 Si una vista no especifica imagen, `layouts/app.blade.php` utiliza por defecto `/images/redes-sociales/og-image-1200x630.png`.
+
+---
+
+> Creado: 2026-11-20 · Última revisión: 2026-11-21
