@@ -59,7 +59,7 @@ En el repositorio se versiona `sources.example.json`. El archivo real (`storage/
 - `JsonAdapter`: Mapea feeds JSON arbitrarios resolviendo URLs relativas.
 - `CveNvdAdapter`: Parsea la API 2.0 de NVD y ajusta la prioridad según puntuación CVSS (`>=9.0` critical, `>=7.0` high, `>=4.0` medium, `<4.0` low).
 - `TextSanitizer`: Limpia HTML/entidades, trunca snippets a `snippet_max_length`, bloquea esquemas inseguros (`javascript:`, `data:`) y resuelve URLs relativas con `resolveUrl()`.
-- `FeedIngestionService`: Envía `If-None-Match` e `If-Modified-Since`, respeta `adapter_options.max_items`, gestiona respuestas `304 Not Modified`, guarda auditoría, deduplica y dispara `NewsItemCreated`.
+- `FeedIngestionService`: Envía `If-None-Match` e `If-Modified-Since`, respeta `adapter_options.max_items`, normaliza todas las fechas a **UTC** acotando `published_at <= now()->utc()` para evitar entradas en el futuro, gestiona respuestas `304 Not Modified`, guarda auditoría, deduplica y dispara `NewsItemCreated`.
 
 ---
 

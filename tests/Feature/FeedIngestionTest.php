@@ -6,6 +6,7 @@ use App\Enums\FetchStatus;
 use App\Enums\Priority;
 use App\Enums\SourceFormat;
 use App\Events\NewsItemCreated;
+use App\Http\Resources\NewsItemResource;
 use App\Models\NewsItem;
 use App\Models\Source;
 use App\Models\SourceFetchLog;
@@ -127,6 +128,47 @@ XML;
         $this->assertSame(1, $result['created']);
         $this->assertDatabaseCount('news_items', 1);
         $this->assertStringContainsString('binutils', NewsItem::query()->firstOrFail()->title);
+    }
+
+    public function test_clamps_future_published_at_and_normalizes_timestamps_to_utc(): void
+    {
+        Event::fake([NewsItemCreated::class]);
+
+        $source = Source::factory()->create([
+            'slug' => 'future-feed',
+            'url' => 'https://example.org/future.xml',
+            'format' => SourceFormat::Rss,
+            'type' => 'linux',
+        ]);
+
+        $futurePubDate = now()->addHours(5)->toRfc2822String();
+        $rssXml = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Future Feed</title>
+    <item>
+      <guid>future-1</guid>
+      <title>Scheduled future article</title>
+      <link>https://example.org/future-1</link>
+      <pubDate>{$futurePubDate}</pubDate>
+    </item>
+  </channel>
+</rss>
+XML;
+
+        Http::fake([
+            'https://example.org/future.xml' => Http::response($rssXml, 200),
+        ]);
+
+        $before = now()->utc()->subSecond();
+        $result = app(FeedIngestionService::class)->ingest($source);
+        $after = now()->utc()->addSecond();
+
+        $this->assertSame(FetchStatus::Success, $result['status']);
+        $item = NewsItem::query()->firstOrFail();
+        $this->assertTrue($item->published_at->utc()->between($before, $after));
+        $this->assertStringEndsWith('+00:00', NewsItemResource::formatItem($item)['published_at']);
     }
 
     public function test_handles_http_304_not_modified_respecting_etag(): void

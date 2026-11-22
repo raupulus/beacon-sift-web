@@ -30,8 +30,8 @@ class SourceResource extends JsonResource
             'language' => $this->language,
             'tags' => $this->tags ?? [],
             'is_active' => $this->is_active,
-            'last_fetched_at' => $this->last_fetched_at?->toIso8601String(),
-            'last_success_at' => $this->last_success_at?->toIso8601String(),
+            'last_fetched_at' => $this->last_fetched_at?->copy()->utc()->toIso8601String(),
+            'last_success_at' => $this->last_success_at?->copy()->utc()->toIso8601String(),
             'consecutive_failures' => $this->consecutive_failures,
         ];
     }

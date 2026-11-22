@@ -43,8 +43,8 @@ class NewsItemResource extends JsonResource
             'priority_weight' => $item->priority_weight,
             'tags' => $item->tags ?? [],
             'metadata' => $item->metadata,
-            'published_at' => $item->published_at->toIso8601String(),
-            'fetched_at' => $item->fetched_at->toIso8601String(),
+            'published_at' => $item->published_at->copy()->utc()->toIso8601String(),
+            'fetched_at' => $item->fetched_at->copy()->utc()->toIso8601String(),
             'source' => $source !== null ? [
                 'slug' => $source->slug,
                 'name' => $source->name,

@@ -33,7 +33,7 @@ class FeedIngestionService
     public function ingest(Source $source): array
     {
         $startedAt = microtime(true);
-        $now = now();
+        $now = now()->utc();
 
         $headers = [
             'User-Agent' => (string) config('beacon.user_agent'),
@@ -106,6 +106,10 @@ class FeedIngestionService
 
                 $priority = $parsed->priorityOverride ?? $source->priority;
                 $mergedTags = array_values(array_unique(array_merge($source->tags ?? [], $parsed->tags)));
+                $publishedAt = $parsed->publishedAt->copy()->utc();
+                if ($publishedAt->greaterThan($now)) {
+                    $publishedAt = $now->copy();
+                }
 
                 $item = NewsItem::query()->create([
                     'source_id' => $source->id,
@@ -121,7 +125,7 @@ class FeedIngestionService
                     'priority_weight' => $priority->weight(),
                     'tags' => $mergedTags,
                     'metadata' => $parsed->metadata,
-                    'published_at' => $parsed->publishedAt,
+                    'published_at' => $publishedAt,
                     'fetched_at' => $now,
                 ]);
 
